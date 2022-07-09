@@ -9,7 +9,7 @@ bot.on("ready", function () {
 })
 
 
-bot.on("message", function (mess) {
+bot.on("messageCreate", function (mess) {
     if (mess.content.startsWith("~clear")) {
         mess.delete()
         mess.channel.bulkDelete(100)
