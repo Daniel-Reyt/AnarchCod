@@ -25,7 +25,7 @@ bot.on("messageCreate", function (mess) {
             "> **~BG** : te dit que tu est beau gosse \n"
         )
     } else if (mess.content.startsWith("~BLG")) {
-        let response = ["de **Vénus**", "de **Jupiter**", "de la **Lune**"];
+        let response = ["de **Vénus**", "de **Jupiter**", "de la **Lune**","de **Eris**","de **Sedna**","de **Haumea**","de **Dysnomia","de **Varuna**","de **Salcia**","de **Namaka**"];
 
         let emojis = ["<:facial:994895288001110057>", "<:pussy:994892402718416936>", "<:ass:994892376575324160>"];
 
@@ -38,7 +38,7 @@ bot.on("messageCreate", function (mess) {
             emojis[random_2]
         )
     } else if (mess.content.startsWith("~BG")) {
-        let response = ["de **Saturne**", "du **Soleil**", "de **Pluton**"];
+        let response = ["de **Saturne**", "du **Soleil**", "de **Pluton**","de **Orcs**","de **Charon**","de **Vanth**","de **Weywot**","de **Actea**","de **Kerberos**","de **Quaroar**"];
 
         let emojis = ["<:facial:994895288001110057>", "<:pussy:994892402718416936>", "<:ass:994892376575324160>"];
 
