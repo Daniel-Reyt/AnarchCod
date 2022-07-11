@@ -22,7 +22,9 @@ bot.on("messageCreate", function (mess) {
             "> **~help** : affiche ce message \n" +
             "> **~clear** : supprime les 100 derniers messages \n" +
             "> **~BLG** : te dit que tu est belle gosse \n" +
-            "> **~BG** : te dit que tu est beau gosse \n"
+            "> **~BG** : te dit que tu est beau gosse \n" +
+            "> **~Event** : permet d'envoyer un message d'event avec en paramêtre le type d'event, la description et la récompense (optionnel), les params doivent être séparés par des **/** pour fonctionner \n"+
+            "> **~deleteVoiceEvent** : commande permettant de supprimer le channel vocal d'Event **(bientot automatisé)** \n"
         )
     } else if (mess.content.startsWith("~BLG")) {
         let response = ["de **Vénus**", "de **Jupiter**", "de la **Lune**","de **Eris**","de **Sedna**","de **Haumea**","de **Dysnomia","de **Varuna**","de **Salcia**","de **Namaka**"];
@@ -50,7 +52,74 @@ bot.on("messageCreate", function (mess) {
             "\n" +
             emojis[random_2]
         )
+    } else if (mess.content.startsWith("~Event")) {
+        let type_event = mess.content.split(" ")[1]
+        let text_event = mess.content.split("/")[1]
+        let winprize_event = mess.content.split("/")[3]
+        let duration_event = mess.content.split("/")[2]
+
+        if (winprize_event != undefined && winprize_event != null && winprize_event != "") {
+            bot.channels.cache.get(`994888269244416062`).send(
+                "||@everyone|| \n"+
+                "\n"+
+                "> Nouvel Event : \n"+
+                "> Type d'event : " + type_event + " \n"+
+                "> Description de l'event : " + text_event + " \n"+
+                "> Récompense de l'event : " + winprize_event + " \n"+ 
+                "> Durée de l'event : " + duration_event + " heures"
+            ).then(function (message) {
+                message.react("👍");
+                message.react("👎");
+            })
+            mess.guild.channel.create('𝔼𝕧𝕖𝕟𝕥', {
+                type: "GUILD_VOICE"
+            }).then(channel => {
+                const category_ID = "995937413299961926"
+                channel.setParent(category_ID)
+                let channel_createDate = new Date(channel.createdTimestamp);
+
+                setInterval(() => {
+                    let date = new Date();
+                    var diff =(date.getTime() - channel_createDate.getTime()) / 1000;
+                    console.log("diff", Math.round(diff))
+                    if (Math.round(diff) == ((duration_event*60)*60)) {
+                        const fetchedChannel = mess.guild.channels.find(r => r.name === '𝔼𝕧𝕖𝕟𝕥' && r.type === "GUILD_VOICE");
+                        fetchedChannel.delete();
+                    }
+                }, 1000)
+            })
+        } else {
+            bot.channels.cache.get(`994888269244416062`).send(
+                "||@everyone|| \n"+
+                "\n"+
+                "> Nouvel Event : \n"+
+                "> Type d'event : " + type_event + " \n"+
+                "> description de l'event : " + text_event + " \n"+
+                "> Durée de l'event : " + duration_event + " heures"
+            ).then(function (message) {
+                message.react("👍");
+                message.react("👎");
+            });
+            mess.guild.channels.create('𝔼𝕧𝕖𝕟𝕥', {
+                type: "GUILD_VOICE"
+            }).then(channel => {
+                const category_ID = "995937413299961926"
+                channel.setParent(category_ID)
+                let channel_createDate = new Date(channel.createdTimestamp);
+
+                let intervalId = setInterval(() => {
+                    let date = new Date();
+                    var diff =(date.getTime() - channel_createDate.getTime()) / 1000;
+                    console.log("diff", Math.round(diff))
+                    if (Math.round(diff) == ((duration_event*60)*60)) {
+                        const fetchedChannel = bot.channels.cache.get(channel.id)
+                        fetchedChannel.delete();
+                        clearInterval(intervalId)
+                    }
+                }, 1000)
+            })            
+        }
     }
 })
 
-bot.login(data.token)
+bot.login("OTk1MzE0MDQxNDQ0NjQyOTM4.GnXk5f.9WiuWre_oV1uAjDPbpMm4P8oHJiDEvJsZoQsm8")
